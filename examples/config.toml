@@ -1,0 +1,64 @@
+# agent-guard configuration. Copy to ~/.config/agent-guard/config.toml and keep only what you change:
+# everything below is merged over the built-in defaults (`agent-guard config --defaults` prints them).
+# TOML needs Python 3.11+; on 3.10 use config.json with the same keys.
+
+language = "en"                       # "en" or "ru": the language of refusals and advice
+
+[rules]                               # every rule is on by default; switch one off by name
+# force-push = false
+# clear-proxy = false
+
+[codex]
+# Codex applies a rewritten command only with permissionDecision "allow", which also skips its
+# approval prompt. "suggest" (default) refuses and hands the agent the safe command instead.
+rewrites = "suggest"
+
+[git]
+protected_branches = ["main", "master", "release", "production"]
+agent_branch_prefixes = ["agent/"]    # branches your agents create; never force-deleted
+
+[kubernetes]
+safe_namespace_pattern = "(test|dev|preview|stand|sandbox|staging|local)"
+argocd_namespace = "argocd"
+change_hint = "Production changes go through a commit to your GitOps repository; by hand, only test namespaces."
+
+[databases]
+statement_timeout_max_s = 900
+lock_timeout_max_s = 30
+backup_hint = "Take the copy from your backup job instead."
+
+[task_keys]
+# With a pattern, a declared write to a production database must carry a task key.
+# pattern = "\\b(PROJ|OPS)-\\d+\\b"
+pattern = ""
+
+[filesystem]
+# Directories whose direct children are shared primary checkouts. Agents work in worktrees
+# under <root>/.worktrees/ instead; the checkouts themselves are read-only for them.
+workspace_roots = []                  # e.g. ["~/work"]
+worktree_dir = ".worktrees"
+worktree_hint = "git worktree add ../.worktrees/<task> -b agent/<task>"
+writable_in_checkout = []             # paths a shared checkout may still be written to, e.g. [".release/"]
+scratch_roots = ["/tmp", "/var/tmp"]  # rm -r is fine below these ($TMPDIR is added)
+
+[secrets]
+where = "a secret manager or an environment variable"
+extra_token_patterns = []             # regular expressions of your own credential formats
+extra_file_patterns = []              # regular expressions of your own secrets files
+
+[proxy]
+clear_for = []                        # e.g. ["kubectl", "helm"]: run these with the proxy variables unset
+
+[gates]
+extra_pattern = ""                    # more commands whose exit code must survive a `| tail`
+
+[background]
+ttl_hours = 12.0
+warn_hours = 2.0
+daemon_patterns = []                  # regular expressions of long-lived helpers never to stop
+
+# Your own refusals, matched against each command after wrappers are peeled off.
+[[custom]]
+name = "no-terraform-apply"
+pattern = "^terraform (apply|destroy)\\b"
+reason = "terraform apply/destroy runs from CI only. Run `terraform plan` and open a pull request."

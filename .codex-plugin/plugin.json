@@ -1,0 +1,14 @@
+{
+  "name": "agent-guard",
+  "version": "0.1.0",
+  "description": "Safety hooks for coding agents: refuse or rewrite destructive and sloppy commands (pkill -f, force pushes, rm -rf outside scratch, kubectl/helm changes in production, unbounded psql, literal tokens, secrets files) before they run.",
+  "author": {
+    "name": "Ly Solutions",
+    "url": "https://github.com/ly-solutions"
+  },
+  "homepage": "https://github.com/ly-solutions/agent-guard",
+  "repository": "https://github.com/ly-solutions/agent-guard",
+  "license": "Apache-2.0",
+  "keywords": ["hooks", "safety", "guardrails", "git", "kubernetes", "secrets"],
+  "hooks": "./hooks/hooks.json"
+}

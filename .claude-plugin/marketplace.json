@@ -1,0 +1,21 @@
+{
+  "name": "agent-guard",
+  "owner": {
+    "name": "Ly Solutions",
+    "url": "https://github.com/ly-solutions"
+  },
+  "metadata": {
+    "description": "Safety hooks for coding agents"
+  },
+  "plugins": [
+    {
+      "name": "agent-guard",
+      "source": "./",
+      "description": "Refuse or rewrite destructive and sloppy agent commands before they run.",
+      "version": "0.1.0",
+      "category": "security",
+      "homepage": "https://github.com/ly-solutions/agent-guard",
+      "license": "Apache-2.0"
+    }
+  ]
+}

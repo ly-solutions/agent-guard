@@ -1,0 +1,28 @@
+name: New rule
+description: Propose a guard for a mistake agents keep making.
+labels: [rule]
+body:
+  - type: textarea
+    id: incident
+    attributes:
+      label: What happened
+      description: What an agent actually ran and what it cost.
+    validations:
+      required: true
+  - type: textarea
+    id: alternative
+    attributes:
+      label: The safe alternative
+      description: What should the agent run instead? A refusal without a way out makes agents try something worse.
+    validations:
+      required: true
+  - type: textarea
+    id: lookalikes
+    attributes:
+      label: Look-alikes that must keep passing
+      render: shell
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Refuse or rewrite?
+      options: [Refuse, Rewrite into the safe form, Advice after the command, Not sure]

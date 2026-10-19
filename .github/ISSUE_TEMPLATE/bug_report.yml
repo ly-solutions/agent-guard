@@ -1,0 +1,35 @@
+name: Wrong decision or bug
+description: agent-guard refused something it should allow, let through something it should refuse, or broke.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Replace real hosts, names and tokens with placeholders before you paste anything.
+  - type: textarea
+    id: command
+    attributes:
+      label: Command or file write
+      description: The exact command (or the path and content) and the directory it ran from.
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: What agent-guard did
+      description: "The refusal or rewrite, ideally the output of `bin/agent-guard check --cwd <dir> -- '<command>'`."
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected, and why
+    validations:
+      required: true
+  - type: input
+    id: env
+    attributes:
+      label: Environment
+      description: agent-guard version, agent (Claude Code / Codex) and version, OS, Python version.
+    validations:
+      required: true

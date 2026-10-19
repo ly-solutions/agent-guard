@@ -1,0 +1,30 @@
+{
+  "language": "en",
+  "rules": {
+    "clear-proxy": true
+  },
+  "git": {
+    "protected_branches": ["main", "master", "release", "production"],
+    "agent_branch_prefixes": ["agent/"]
+  },
+  "kubernetes": {
+    "safe_namespace_pattern": "(test|dev|preview|stand|sandbox|staging|local)"
+  },
+  "task_keys": {
+    "pattern": ""
+  },
+  "filesystem": {
+    "workspace_roots": [],
+    "worktree_hint": "git worktree add ../.worktrees/<task> -b agent/<task>"
+  },
+  "proxy": {
+    "clear_for": []
+  },
+  "custom": [
+    {
+      "name": "no-terraform-apply",
+      "pattern": "^terraform (apply|destroy)\\b",
+      "reason": "terraform apply/destroy runs from CI only. Run `terraform plan` and open a pull request."
+    }
+  ]
+}

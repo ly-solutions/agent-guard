@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+# agent-bg: lifetime of detached agent processes. Same as `agent-guard bg …`.
+set -eu
+self=$0
+while [ -L "$self" ]; do
+  link=$(readlink "$self")
+  case $link in /*) self=$link ;; *) self=$(dirname "$self")/$link ;; esac
+done
+exec "$(cd "$(dirname "$self")" && pwd)/agent-guard" bg "$@"

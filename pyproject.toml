@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agent-guard"
+version = "0.1.0"
+description = "Safety hooks for coding agents: refuse or rewrite destructive and sloppy commands before they run."
+readme = "README.md"
+license = "Apache-2.0"
+requires-python = ">=3.10"
+authors = [{ name = "Ly Solutions" }]
+keywords = ["claude-code", "codex", "hooks", "ai-agents", "safety", "guardrails"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "Operating System :: POSIX",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Topic :: Software Development",
+  "Topic :: Security",
+]
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/ly-solutions/agent-guard"
+Issues = "https://github.com/ly-solutions/agent-guard/issues"
+Changelog = "https://github.com/ly-solutions/agent-guard/blob/main/CHANGELOG.md"
+
+[project.scripts]
+agent-guard = "agent_guard.cli:main"
+agent-bg = "agent_guard.cli:bg_main"
+
+[tool.setuptools]
+packages = ["agent_guard"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 160
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "BLE", "RUF"]
+ignore = ["E501", "RUF001", "RUF002", "RUF003"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["agent_guard", "conftest"]
